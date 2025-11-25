@@ -1,47 +1,156 @@
+/* Updated style.css
+   - Dark yellow / brown color scheme
+   - Responsive tweaks for mobile
+   - Accessibility: box-sizing, focus styles, larger tap targets
+*/
+
+* {
+    box-sizing: border-box;
+}
+
+:root{
+    /* Colors: earthy yellow & brown */
+    --bg: #efe6c1;           /* page background (light warm beige) */
+    --container-bg: #fff9e6; /* container background (pale yellow) */
+    --accent: #b1863a;       /* warm brown/gold accent */
+    --accent-dark: #6b4312;  /* dark brown for headings */
+    --text: #3b2b18;         /* main text (dark brown) */
+    --muted: #7a5f3a;        /* muted brown for labels */
+    --result-bg: #efe0a8;    /* pale result box yellow */
+    --input-bg: #fbf3d6;     /* select background */
+    --border: #dac694;       /* subtle border */
+}
 
 body {
-    font-family: Arial, sans-serif;
-    background: #f4f4f4;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
     margin: 0;
     padding: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.4;
 }
 
 .container {
-    max-width: 800px;
+    max-width: 860px;
     margin: 50px auto;
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    background: var(--container-bg);
+    padding: 22px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    box-shadow: 0 6px 20px rgba(46, 32, 14, 0.12);
 }
 
 h1 {
     text-align: center;
-    color: #333;
+    color: var(--accent-dark);
+    margin: 0 0 18px 0;
+    font-size: 1.6rem;
+    font-weight: 700;
 }
 
+/* selectors area */
 .selectors {
     display: flex;
+    flex-wrap: wrap;
+    gap: 12px 18px;
     justify-content: space-between;
+    align-items: center;
     margin-bottom: 20px;
 }
 
-label {
-    margin-right: 10px;
+/* keep labels readable and compact */
+.selectors label {
+    color: var(--muted);
+    margin-right: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
 }
 
-select {
-    padding: 8px;
-    font-size: 16px;
+/* style selects to match the theme and be touch-friendly */
+.selectors select {
+    padding: 10px 12px;
+    font-size: 1rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--input-bg);
+    color: var(--text);
+    min-width: 160px;
+    transition: box-shadow 160ms ease, transform 120ms ease;
+    appearance: none; /* consistent appearance on some browsers */
+    -webkit-appearance: none;
 }
 
+/* subtle hover and focus */
+.selectors select:hover {
+    box-shadow: 0 4px 10px rgba(177,134,58,0.08);
+}
+
+.selectors select:focus,
+.selectors select:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(177,134,58,0.12);
+    border-color: var(--accent);
+    transform: translateY(-1px);
+}
+
+/* result box with stronger accent */
 .result-box {
-    background: #e9f5ff;
-    padding: 15px;
-    border-radius: 6px;
+    background: var(--result-bg);
+    padding: 16px;
+    border-radius: 8px;
+    border-left: 4px solid var(--accent);
+    color: var(--text);
 }
 
 .result-box h2 {
     margin-top: 0;
-    color: #0077cc;
+    color: var(--accent-dark);
+    font-size: 1.15rem;
+}
+
+/* small utility tweaks */
+p { margin: 8px 0; }
+strong { color: var(--accent-dark); }
+
+/* Responsive: mobile-first adjustments */
+@media (max-width: 600px) {
+    .container {
+        margin: 18px 12px;
+        padding: 16px;
+    }
+
+    h1 {
+        font-size: 1.25rem;
+    }
+
+    .selectors {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+        margin-bottom: 16px;
+    }
+
+    .selectors label {
+        display: block;
+        margin-bottom: 6px;
+    }
+
+    .selectors select {
+        width: 100%;
+        min-width: 0;
+        padding: 12px;
+        font-size: 1rem;
+    }
+
+    .result-box {
+        padding: 12px;
+    }
+}
+
+/* Make focus visible for keyboard/touch users on other elements too */
+:focus-visible {
+    outline: 3px solid rgba(177,134,58,0.12);
+    outline-offset: 2px;
 }
