@@ -1,7 +1,7 @@
-/* Total-Battle-inspired theme with top menu and back-to-top links
+/* Total-Battle-inspired theme with emphasized top menu
    - Deep blue / gold palette
-   - Cinzel headings, Montserrat body
-   - Responsive and accessible
+   - Larger, uppercase, bold menu aligned to the right on desktop
+   - Subtle yellow rectangle behind the menu for emphasis
 */
 
 * { box-sizing: border-box; }
@@ -16,6 +16,7 @@
   --panel-border: rgba(255,180,0,0.08);
   --shadow: 0 12px 30px rgba(2,8,20,0.6);
   --glass: rgba(255,255,255,0.02);
+  --menu-highlight: rgba(255,180,0,0.12); /* pale yellow rectangle */
 }
 
 html,body {
@@ -41,15 +42,6 @@ html,body {
   overflow: visible;
 }
 
-.container::before{
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(600px 240px at 10% 10%, rgba(255,180,0,0.04), transparent 6%),
-              radial-gradient(300px 120px at 90% 80%, rgba(232,91,47,0.02), transparent 8%);
-  pointer-events: none;
-}
-
 /* Headings */
 h1 {
   font-family: "Cinzel", Georgia, serif;
@@ -66,34 +58,59 @@ h1 {
   font-size: 1rem;
 }
 
-/* Top horizontal menu */
+/* Top horizontal menu - emphasis box and right alignment on desktop */
 .top-menu {
   display: flex;
-  gap: 10px;
-  justify-content: center;
+  gap: 16px;
+  justify-content: flex-end;           /* push to the right on larger screens */
+  align-items: center;
   margin: 12px 0 20px 0;
-  flex-wrap: wrap;
+  position: relative;
+  padding: 10px 14px;
+  border-radius: 14px;
 }
 
+/* pale yellow rectangle behind the menu for emphasis */
+.top-menu::before {
+  content: "";
+  position: absolute;
+  inset: -8px -18px -8px -8px; /* extend a bit outside the menu to create a rectangle "outside" */
+  background: var(--menu-highlight);
+  border-radius: 16px;
+  z-index: -1;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+}
+
+/* Menu buttons: larger, uppercase, bold, more spaced */
 .menu-btn {
   display: inline-block;
-  padding: 8px 14px;
+  padding: 10px 18px;
   border-radius: 999px;
   background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.00));
   border: 1px solid rgba(255,255,255,0.04);
   color: var(--text);
   text-decoration: none;
-  font-weight: 700;
-  font-size: 0.95rem;
+  font-weight: 800;                    /* bolder */
+  font-size: 1.05rem;                  /* bigger */
+  text-transform: uppercase;           /* majuscule */
+  letter-spacing: 1px;                 /* more spacing */
   transition: transform 120ms ease, box-shadow 120ms ease, color 120ms ease;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.45);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.45);
 }
 
+/* Hover/focus styles: accent color for the label for clarity */
 .menu-btn:hover,
 .menu-btn:focus {
-  transform: translateY(-2px);
+  transform: translateY(-3px);
   color: var(--accent);
-  box-shadow: 0 10px 26px rgba(0,0,0,0.55);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.55);
+  outline: none;
+}
+
+/* Ensure accessible focus ring */
+.menu-btn:focus-visible {
+  outline: 3px solid rgba(255,180,0,0.18);
+  outline-offset: 4px;
 }
 
 /* General Tips header uses Cinzel too */
@@ -240,11 +257,21 @@ strong { color: var(--accent); }
   font-size: 0.92rem;
 }
 
-/* smaller screens */
+/* Responsive: center menu on small screens and reduce emphasis */
 @media (max-width: 700px) {
   .container { margin: 18px 12px; padding: 16px; border-radius: 8px; }
   h1 { font-size: 1.4rem; }
-  .top-menu { gap: 8px; }
+  .top-menu {
+    justify-content: center;   /* center on mobile */
+    padding: 8px 10px;
+  }
+  .top-menu::before {
+    inset: -6px -8px -6px -8px;
+  }
+  .menu-btn {
+    font-size: 1rem;
+    padding: 8px 12px;
+  }
   .selectors { flex-direction: column; align-items: stretch; gap: 10px; }
   .selectors select { width: 100%; min-width: 0; padding: 12px; }
   .general-tips summary { padding: 12px; font-size: 1rem; }
