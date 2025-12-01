@@ -1,35 +1,40 @@
-/* Total-Battle-inspired theme with emphasized top menu
-   - Deep blue / gold palette
-   - Larger, uppercase, bold menu aligned to the right on desktop
-   - Subtle yellow rectangle behind the menu for emphasis
+/* Updated theme: blue sides with a light yellow inner panel and darker text
+   - Keeps the Total Battle inspired palette, but swaps the container to a light yellow
+   - Darker readable text inside
+   - Preserves menu emphasis, select styling and accessibility
 */
 
 * { box-sizing: border-box; }
 
 :root{
-  --page-bg: #081226;
-  --panel-bg: linear-gradient(180deg,#0f2744 0%, #0b1c33 100%);
-  --accent: #ffb400;
-  --accent-2: #e85b2f;
-  --muted: #9aa4b5;
-  --text: #f6eedf;
-  --panel-border: rgba(255,180,0,0.08);
-  --shadow: 0 12px 30px rgba(2,8,20,0.6);
-  --glass: rgba(255,255,255,0.02);
-  --menu-highlight: rgba(255,180,0,0.12); /* pale yellow rectangle */
+  /* Page / panel palette */
+  --page-bg: #081226;               /* deep night blue for the page sides */
+  --inner-bg-start: #fffbe6;        /* light yellow (top) */
+  --inner-bg-end:   #fff6c8;        /* light yellow (bottom) */
+  --panel-bg: linear-gradient(180deg,var(--inner-bg-start) 0%, var(--inner-bg-end) 100%);
+  --accent: #ffb400;                /* gold accent */
+  --accent-2: #e85b2f;              /* secondary orange/red accent */
+  --muted: #6d6a58;                 /* muted dark for labels on light background */
+  --text-dark: #2a2a23;             /* darker readable text for light background */
+  --panel-border: rgba(42,34,20,0.06);
+  --shadow: 0 12px 30px rgba(2,8,20,0.12);
+  --glass: rgba(255,255,255,0.35);
+  --menu-highlight: rgba(255,180,0,0.12);
 }
 
+/* Page base */
 html,body {
   height: 100%;
   margin: 0;
   background: var(--page-bg);
-  color: var(--text);
+  color: var(--text-dark); /* use darker text by default */
   font-family: "Montserrat", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.45;
 }
 
+/* Outer container: light yellow interior */
 .container {
   max-width: 980px;
   margin: 48px auto;
@@ -42,18 +47,29 @@ html,body {
   overflow: visible;
 }
 
-/* Headings */
+/* subtle decorative vignette that blends with the yellow panel */
+.container::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(600px 240px at 10% 10%, rgba(0,0,0,0.02), transparent 6%),
+    radial-gradient(300px 120px at 90% 80%, rgba(232,91,47,0.01), transparent 8%);
+  pointer-events: none;
+}
+
+/* Headings: darker color for contrast on the light background */
 h1 {
   font-family: "Cinzel", Georgia, serif;
   font-size: 2rem;
   margin: 0 0 10px 0;
-  color: var(--accent);
+  color: var(--text-dark);
   letter-spacing: 0.6px;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+  text-shadow: none;
 }
 
 .intro {
-  color: #dfe6ee;
+  color: var(--text-dark);
   margin: 8px 0 18px 0;
   font-size: 1rem;
 }
@@ -70,15 +86,15 @@ h1 {
   border-radius: 14px;
 }
 
-/* pale yellow rectangle behind the menu for emphasis */
+/* pale yellow rectangle behind the menu for emphasis (subtle) */
 .top-menu::before {
   content: "";
   position: absolute;
-  inset: -8px -18px -8px -8px; /* extend a bit outside the menu to create a rectangle "outside" */
+  inset: -8px -18px -8px -8px;
   background: var(--menu-highlight);
   border-radius: 16px;
   z-index: -1;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
 }
 
 /* Menu buttons: larger, uppercase, bold, more spaced */
@@ -86,28 +102,25 @@ h1 {
   display: inline-block;
   padding: 10px 18px;
   border-radius: 999px;
-  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.00));
-  border: 1px solid rgba(255,255,255,0.04);
-  color: var(--text);
+  background: rgba(11,17,28,0.06); /* slightly dark translucent to stand out on yellow */
+  border: 1px solid rgba(11,17,28,0.06);
+  color: var(--text-dark);
   text-decoration: none;
-  font-weight: 800;                    /* bolder */
-  font-size: 1.05rem;                  /* bigger */
-  text-transform: uppercase;           /* majuscule */
-  letter-spacing: 1px;                 /* more spacing */
+  font-weight: 800;
+  font-size: 1.05rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
   transition: transform 120ms ease, box-shadow 120ms ease, color 120ms ease;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.06);
 }
 
-/* Hover/focus styles: accent color for the label for clarity */
 .menu-btn:hover,
 .menu-btn:focus {
   transform: translateY(-3px);
   color: var(--accent);
-  box-shadow: 0 12px 30px rgba(0,0,0,0.55);
-  outline: none;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.10);
 }
 
-/* Ensure accessible focus ring */
 .menu-btn:focus-visible {
   outline: 3px solid rgba(255,180,0,0.18);
   outline-offset: 4px;
@@ -116,16 +129,16 @@ h1 {
 /* General Tips header uses Cinzel too */
 .general-tips h2 {
   font-family: "Cinzel", serif;
-  color: var(--text);
+  color: var(--text-dark);
   margin: 8px 0 10px 0;
   font-size: 1.1rem;
   letter-spacing: 0.4px;
 }
 
-/* Details/summary styling (accordion) */
+/* Details/summary styling (accordion) — adapt colors for light panel */
 .general-tips details {
-  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.00));
-  border: 1px solid rgba(255,255,255,0.03);
+  background: linear-gradient(180deg, rgba(10,12,14,0.02), rgba(10,12,14,0.00));
+  border: 1px solid rgba(0,0,0,0.04);
   border-radius: 8px;
   margin: 8px 0;
   overflow: hidden;
@@ -138,12 +151,12 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: var(--text);
+  color: var(--text-dark);
   font-weight: 600;
   font-size: 0.98rem;
-  background: linear-gradient(90deg, rgba(255,180,0,0.01), transparent);
 }
 
+/* marker chevron */
 .general-tips summary::after{
   content: "▾";
   color: var(--muted);
@@ -155,12 +168,12 @@ h1 {
 
 .general-tips .tip-content{
   padding: 12px 14px 16px 14px;
-  color: #e7dfc8;
+  color: var(--text-dark);
   font-size: 0.98rem;
-  border-top: 1px solid rgba(255,255,255,0.02);
+  border-top: 1px solid rgba(0,0,0,0.03);
 }
 
-/* Selectors */
+/* Selectors layout */
 .selectors {
   display: flex;
   flex-wrap: wrap;
@@ -177,14 +190,14 @@ h1 {
   font-size: 0.95rem;
 }
 
-/* select: black font for selected value and dropdown options */
+/* select: keep black / dark text for readability */
 .selectors select {
   padding: 10px 14px;
   font-size: 0.98rem;
   border-radius: 999px;
   min-width: 180px;
-  background: linear-gradient(180deg,var(--glass), rgba(255,255,255,0.01));
-  border: 1px solid rgba(255,255,255,0.04);
+  background: #ffffff;
+  border: 1px solid rgba(0,0,0,0.08);
   color: #000;
   cursor: pointer;
   transition: transform 140ms ease, box-shadow 160ms ease;
@@ -196,9 +209,8 @@ h1 {
   color: #000;
 }
 
-/* hover / focus */
 .selectors select:hover {
-  box-shadow: 0 8px 18px rgba(0,0,0,0.6);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.06);
   transform: translateY(-2px);
 }
 .selectors select:focus,
@@ -208,31 +220,31 @@ h1 {
   border-color: var(--accent);
 }
 
-/* result box with stronger gold accent */
+/* result box with darker text on light panel */
 .result-box {
-  background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(0,0,0,0.02));
+  background: transparent;
   padding: 16px;
   border-radius: 8px;
   border-left: 4px solid var(--accent);
-  color: var(--text);
+  color: var(--text-dark);
   margin-top: 8px;
 }
 
 /* Stacking section */
 .stacking h2 {
   font-family: "Cinzel", serif;
-  color: var(--text);
+  color: var(--text-dark);
   margin-top: 18px;
 }
 
-/* back link */
+/* back link (use dark accent) */
 .back-link {
   margin-top: 10px;
 }
 .back-link a {
   color: var(--accent);
   text-decoration: none;
-  font-weight: 600;
+  font-weight: 700;
 }
 .back-link a:hover,
 .back-link a:focus {
@@ -240,29 +252,25 @@ h1 {
   text-decoration: underline;
 }
 
-/* small utilities */
-.result-box h2, .resources h3 { color: #fff; margin-top:0; }
-p { margin: 8px 0; color: #e8e0c7; }
-strong { color: var(--accent); }
-
-.resources ul { padding-left: 1.1rem; color: #e2dcc8; }
+/* Resources & footer on light panel */
+.resources ul { padding-left: 1.1rem; color: var(--text-dark); }
 .resources a { color: var(--accent); text-decoration: none; }
 .resources a:hover { color: var(--accent-2); text-decoration: underline; }
 
 .site-footer {
   margin-top: 18px;
-  border-top: 1px solid rgba(255,255,255,0.02);
+  border-top: 1px solid rgba(0,0,0,0.04);
   padding-top: 12px;
-  color: #cfc8b6;
+  color: var(--text-dark);
   font-size: 0.92rem;
 }
 
-/* Responsive: center menu on small screens and reduce emphasis */
+/* smaller screens: center menu and adjust spacing */
 @media (max-width: 700px) {
   .container { margin: 18px 12px; padding: 16px; border-radius: 8px; }
   h1 { font-size: 1.4rem; }
   .top-menu {
-    justify-content: center;   /* center on mobile */
+    justify-content: center;
     padding: 8px 10px;
   }
   .top-menu::before {
@@ -279,5 +287,5 @@ strong { color: var(--accent); }
   .result-box { padding: 12px; }
 }
 
-/* focus-visible for keyboard users */
+/* accessible focus-visible for keyboard users */
 :focus-visible { outline: 3px solid rgba(255,180,0,0.10); outline-offset: 2px; }
