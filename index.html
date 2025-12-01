@@ -9,16 +9,23 @@
 </head>
 <body>
     <div class="container">
+        <a id="top"></a>
         <h1>Total Battle Strategy Guide</h1>
 
-        <!-- Intro / description -->
+        <!-- Intro / description (updated as requested) -->
         <p class="intro">
-            Welcome to Tha Black Pearl Clan Total Battle Guide — a compact reference to help you choose the best troops and compositions
-            for different targets and levels. Use the dropdowns below to view suggested compositions and notes for each target.
+            Welcome to The Black Pearl Clan Total Battle Guide — A compact reference of tips for the Clan.
         </p>
 
+        <!-- Horizontal top menu (all buttons visible) -->
+        <nav class="top-menu" role="navigation" aria-label="Top menu">
+            <a class="menu-btn" href="#general-tips">General tips</a>
+            <a class="menu-btn" href="#strategy-monsters">Strategy Details for Monsters</a>
+            <a class="menu-btn" href="#stacking-calculator">Stacking Calculator</a>
+        </nav>
+
         <!-- General Tips (subtitle + organized content as accordion) -->
-        <section class="general-tips" aria-labelledby="general-tips-heading">
+        <section id="general-tips" class="general-tips" aria-labelledby="general-tips-heading">
             <h2 id="general-tips-heading">General Tips</h2>
 
             <!-- Each tip uses a native details/summary element for accessibility.
@@ -71,27 +78,41 @@
                     Claim only one per reset, register in chat, arrive within 10 minutes, and do not steal claimed mounds.
                 </div>
             </details>
+
+            <p class="back-link"><a href="#top">Back to top</a></p>
         </section>
 
-        <div class="selectors">
-            <label for="targetSelect">Select Target:</label>
-            <select id="targetSelect">
-                <option value="">--Choose Target--</option>
-            </select>
-
-            <label for="levelSelect">Select Level:</label>
-            <select id="levelSelect">
-                <option value="">--Choose Level--</option>
-            </select>
-        </div>
-
         <div class="result-box">
-            <h2>Strategy Details</h2>
+            <h2 id="strategy-monsters">Strategy Details for Monsters</h2>
+
+            <!-- Selectors moved inside the Strategy Details box as requested -->
+            <div class="selectors">
+                <label for="targetSelect">Select Target:</label>
+                <select id="targetSelect">
+                    <option value="">--Choose Target--</option>
+                </select>
+
+                <label for="levelSelect">Select Level:</label>
+                <select id="levelSelect">
+                    <option value="">--Choose Level--</option>
+                </select>
+            </div>
+
             <p><strong>Target:</strong> <span id="targetName">-</span></p>
             <p><strong>Level:</strong> <span id="levelValue">-</span></p>
             <p><strong>Best Composition:</strong> <span id="composition">-</span></p>
             <p id="extraNote"></p>
+
+            <p class="back-link"><a href="#top">Back to top</a></p>
         </div>
+
+        <!-- Stacking Calculator section (placeholder) -->
+        <section id="stacking-calculator" class="stacking" aria-labelledby="stacking-heading">
+            <h2 id="stacking-heading">Stacking Calculator</h2>
+            <p class="tip-content">This is a placeholder for the Stacking Calculator. If you want, I can add a working calculator here (inputs for stacking bonuses, troop counts, etc.).</p>
+
+            <p class="back-link"><a href="#top">Back to top</a></p>
+        </section>
 
         <!-- Resources section with links -->
         <section class="resources" aria-label="Resources">
