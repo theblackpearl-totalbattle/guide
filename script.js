@@ -1,4 +1,4 @@
-
+// Data and select population logic (unchanged)
 const data = {
     "Elven Citadel": {
         note: "Include Griffins if available for all Citadel attacks.",
@@ -74,3 +74,52 @@ levelSelect.addEventListener('change', () => {
         extraNote.textContent = data[selectedTarget].note;
     }
 });
+
+// Accordion behavior for .general-tips using <details>/<summary>
+// - On desktop (width > 600px): show all tips expanded (useful for reading).
+// - On mobile (<= 600px): collapse all by default and enforce single-open accordion behavior.
+(function () {
+    const MOBILE_BREAKPOINT = 600;
+    const detailsSelector = '.general-tips details';
+    const detailsNodeList = () => Array.from(document.querySelectorAll(detailsSelector));
+
+    function setupAccordion() {
+        const details = detailsNodeList();
+        if (!details.length) return;
+
+        if (window.innerWidth > MOBILE_BREAKPOINT) {
+            // Desktop/tablet: expand all for easier scanning
+            details.forEach(d => d.open = true);
+            // Remove mobile-specific toggle handlers if previously attached
+            details.forEach(d => d.removeEventListener('toggle', mobileToggleHandler));
+        } else {
+            // Mobile: collapse all and attach toggle handler to emulate single-open accordion
+            details.forEach(d => d.open = false);
+            details.forEach(d => {
+                d.removeEventListener('toggle', mobileToggleHandler); // avoid duplicates
+                d.addEventListener('toggle', mobileToggleHandler);
+            });
+        }
+    }
+
+    function mobileToggleHandler(e) {
+        // When a details element opens on mobile, close the others
+        if (!e.target.open) return; // only act when opening
+        const details = detailsNodeList();
+        details.forEach(other => {
+            if (other !== e.target) other.open = false;
+        });
+        // scroll the opened summary into view slightly (user-friendly)
+        e.target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    // Initialize now (script is loaded at end of body, so DOM is ready)
+    setupAccordion();
+
+    // Update on resize (debounced)
+    let resizeTimer = null;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(setupAccordion, 120);
+    });
+})();
