@@ -1,156 +1,208 @@
-/* Updated style.css
-   - Dark yellow / brown color scheme
-   - Responsive tweaks for mobile
-   - Accessibility: box-sizing, focus styles, larger tap targets
+/* Total-Battle-inspired theme
+   - Deep blue / gold palette
+   - Cinzel headings, Montserrat body
+   - Cinematic hero gradients and subtle textures
+   - Responsive and accessible
 */
 
-* {
-    box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 :root{
-    /* Colors: earthy yellow & brown */
-    --bg: #efe6c1;           /* page background (light warm beige) */
-    --container-bg: #fff9e6; /* container background (pale yellow) */
-    --accent: #b1863a;       /* warm brown/gold accent */
-    --accent-dark: #6b4312;  /* dark brown for headings */
-    --text: #3b2b18;         /* main text (dark brown) */
-    --muted: #7a5f3a;        /* muted brown for labels */
-    --result-bg: #efe0a8;    /* pale result box yellow */
-    --input-bg: #fbf3d6;     /* select background */
-    --border: #dac694;       /* subtle border */
+  /* Core palette */
+  --page-bg: #081226;        /* deep night blue page background */
+  --panel-bg: linear-gradient(180deg,#0f2744 0%, #0b1c33 100%); /* container */
+  --accent: #ffb400;         /* gold accent */
+  --accent-2: #e85b2f;       /* secondary orange/red accent */
+  --muted: #9aa4b5;          /* muted light for labels */
+  --text: #f6eedf;           /* warm off-white text */
+  --panel-border: rgba(255,180,0,0.08);
+  --shadow: 0 12px 30px rgba(2,8,20,0.6);
+  --glass: rgba(255,255,255,0.02);
 }
 
-body {
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    margin: 0;
-    padding: 0;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    line-height: 1.4;
+/* Page base */
+html,body {
+  height: 100%;
+  margin: 0;
+  background: var(--page-bg);
+  color: var(--text);
+  font-family: "Montserrat", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.45;
 }
 
+/* Outer container with cinematic look */
 .container {
-    max-width: 860px;
-    margin: 50px auto;
-    background: var(--container-bg);
-    padding: 22px;
-    border-radius: 10px;
-    border: 1px solid var(--border);
-    box-shadow: 0 6px 20px rgba(46, 32, 14, 0.12);
+  max-width: 980px;
+  margin: 48px auto;
+  padding: 26px;
+  border-radius: 12px;
+  background: var(--panel-bg);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--panel-border);
+  position: relative;
+  overflow: hidden;
 }
 
+/* decorative glow / subtle vignette to hint at hero art */
+.container::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(600px 240px at 10% 10%, rgba(255,180,0,0.04), transparent 6%),
+              radial-gradient(300px 120px at 90% 80%, rgba(232,91,47,0.02), transparent 8%);
+  pointer-events: none;
+}
+
+/* Headings */
 h1 {
-    text-align: center;
-    color: var(--accent-dark);
-    margin: 0 0 18px 0;
-    font-size: 1.6rem;
-    font-weight: 700;
+  font-family: "Cinzel", Georgia, serif;
+  font-size: 2rem;
+  margin: 0 0 10px 0;
+  color: var(--accent);
+  letter-spacing: 0.6px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
 }
 
-/* selectors area */
+.intro {
+  color: #dfe6ee;
+  margin: 8px 0 18px 0;
+  font-size: 1rem;
+}
+
+/* General Tips header uses Cinzel too */
+.general-tips h2 {
+  font-family: "Cinzel", serif;
+  color: var(--text);
+  margin: 8px 0 10px 0;
+  font-size: 1.1rem;
+  letter-spacing: 0.4px;
+}
+
+/* Details/summary styling (accordion) */
+.general-tips details {
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.00));
+  border: 1px solid rgba(255,255,255,0.03);
+  border-radius: 8px;
+  margin: 8px 0;
+  overflow: hidden;
+}
+
+.general-tips summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--text);
+  font-weight: 600;
+  font-size: 0.98rem;
+  background: linear-gradient(90deg, rgba(255,180,0,0.01), transparent);
+}
+
+/* marker chevron */
+.general-tips summary::after{
+  content: "▾";
+  color: var(--muted);
+  transition: transform 0.18s ease;
+}
+.general-tips details[open] > summary::after{
+  transform: rotate(180deg);
+}
+
+/* tip content */
+.general-tips .tip-content{
+  padding: 12px 14px 16px 14px;
+  color: #e7dfc8;
+  font-size: 0.98rem;
+  border-top: 1px solid rgba(255,255,255,0.02);
+}
+
+/* Selectors area: more prominent buttons, gold accents */
 .selectors {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px 18px;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 18px;
+  justify-content: space-between;
+  align-items: center;
+  margin: 18px 0;
 }
 
-/* keep labels readable and compact */
+/* label style */
 .selectors label {
-    color: var(--muted);
-    margin-right: 8px;
-    font-weight: 600;
-    font-size: 0.95rem;
+  color: var(--muted);
+  margin-right: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
 }
 
-/* style selects to match the theme and be touch-friendly */
+/* select element restyled to look like a neat button/pill */
 .selectors select {
-    padding: 10px 12px;
-    font-size: 1rem;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    background: var(--input-bg);
-    color: var(--text);
-    min-width: 160px;
-    transition: box-shadow 160ms ease, transform 120ms ease;
-    appearance: none; /* consistent appearance on some browsers */
-    -webkit-appearance: none;
+  padding: 10px 14px;
+  font-size: 0.98rem;
+  border-radius: 999px;
+  min-width: 180px;
+  background: linear-gradient(180deg,var(--glass), rgba(255,255,255,0.01));
+  border: 1px solid rgba(255,255,255,0.04);
+  color: var(--text);
+  cursor: pointer;
+  transition: transform 140ms ease, box-shadow 160ms ease;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
-/* subtle hover and focus */
+/* hover / focus */
 .selectors select:hover {
-    box-shadow: 0 4px 10px rgba(177,134,58,0.08);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.6);
+  transform: translateY(-2px);
 }
-
 .selectors select:focus,
 .selectors select:focus-visible {
-    outline: none;
-    box-shadow: 0 0 0 4px rgba(177,134,58,0.12);
-    border-color: var(--accent);
-    transform: translateY(-1px);
+  outline: none;
+  box-shadow: 0 0 0 6px rgba(255,180,0,0.08);
+  border-color: var(--accent);
 }
 
-/* result box with stronger accent */
+/* result box with stronger gold accent */
 .result-box {
-    background: var(--result-bg);
-    padding: 16px;
-    border-radius: 8px;
-    border-left: 4px solid var(--accent);
-    color: var(--text);
+  background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(0,0,0,0.02));
+  padding: 16px;
+  border-radius: 8px;
+  border-left: 4px solid var(--accent);
+  color: var(--text);
+  margin-top: 8px;
 }
 
-.result-box h2 {
-    margin-top: 0;
-    color: var(--accent-dark);
-    font-size: 1.15rem;
+/* small utilities */
+.result-box h2, .resources h3 { color: #fff; margin-top:0; }
+p { margin: 8px 0; color: #e8e0c7; }
+strong { color: var(--accent); }
+
+/* Resources & footer */
+.resources ul { padding-left: 1.1rem; color: #e2dcc8; }
+.resources a { color: var(--accent); text-decoration: none; }
+.resources a:hover { color: var(--accent-2); text-decoration: underline; }
+
+.site-footer {
+  margin-top: 18px;
+  border-top: 1px solid rgba(255,255,255,0.02);
+  padding-top: 12px;
+  color: #cfc8b6;
+  font-size: 0.92rem;
 }
 
-/* small utility tweaks */
-p { margin: 8px 0; }
-strong { color: var(--accent-dark); }
-
-/* Responsive: mobile-first adjustments */
-@media (max-width: 600px) {
-    .container {
-        margin: 18px 12px;
-        padding: 16px;
-    }
-
-    h1 {
-        font-size: 1.25rem;
-    }
-
-    .selectors {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 10px;
-        margin-bottom: 16px;
-    }
-
-    .selectors label {
-        display: block;
-        margin-bottom: 6px;
-    }
-
-    .selectors select {
-        width: 100%;
-        min-width: 0;
-        padding: 12px;
-        font-size: 1rem;
-    }
-
-    .result-box {
-        padding: 12px;
-    }
+/* smaller screens: stack and tighten spacing */
+@media (max-width: 700px) {
+  .container { margin: 18px 12px; padding: 16px; border-radius: 8px; }
+  h1 { font-size: 1.4rem; }
+  .selectors { flex-direction: column; align-items: stretch; gap: 10px; }
+  .selectors select { width: 100%; min-width: 0; padding: 12px; }
+  .general-tips summary { padding: 12px; font-size: 1rem; }
+  .general-tips .tip-content { font-size: 0.98rem; }
+  .result-box { padding: 12px; }
 }
 
-/* Make focus visible for keyboard/touch users on other elements too */
-:focus-visible {
-    outline: 3px solid rgba(177,134,58,0.12);
-    outline-offset: 2px;
-}
+/* focus-visible for keyboard users */
+:focus-visible { outline: 3px solid rgba(255,180,0,0.10); outline-offset: 2px; }
