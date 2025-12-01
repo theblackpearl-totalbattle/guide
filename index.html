@@ -4,11 +4,74 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Total Battle Guide</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
     <div class="container">
         <h1>Total Battle Strategy Guide</h1>
+
+        <!-- Intro / description -->
+        <p class="intro">
+            Welcome to Tha Black Pearl Clan Total Battle Guide — a compact reference to help you choose the best troops and compositions
+            for different targets and levels. Use the dropdowns below to view suggested compositions and notes for each target.
+        </p>
+
+        <!-- General Tips (subtitle + organized content as accordion) -->
+        <section class="general-tips" aria-labelledby="general-tips-heading">
+            <h2 id="general-tips-heading">General Tips</h2>
+
+            <!-- Each tip uses a native details/summary element for accessibility.
+                 JS will make these behave as an accordion on small screens. -->
+            <details>
+                <summary>Crypts</summary>
+                <div class="tip-content">
+                    Crypts provide materials for armor, XP, silver, food, and clan chests.
+                </div>
+            </details>
+
+            <details>
+                <summary>Reviving troops</summary>
+                <div class="tip-content">
+                    Avoid reviving troops with gold; only revive mercenaries and monsters.
+                </div>
+            </details>
+
+            <details>
+                <summary>Clan resources</summary>
+                <div class="tip-content">
+                    Wood → Planks, Iron → Steel, Stone → Cement, Silver → Scientific Treaties, Food → Religious Treaties.
+                </div>
+            </details>
+
+            <details>
+                <summary>City setup</summary>
+                <div class="tip-content">
+                    Start on a silver tile (90%), later move to a food tile (90%). Build farms and mansions 50/50.
+                </div>
+            </details>
+
+            <details>
+                <summary>Captains priority</summary>
+                <div class="tip-content">
+                    Carter, Cleopatra, Amanitore, Helen, Stror, Dustan. Wu Zetian later for G5/G6.
+                </div>
+            </details>
+
+            <details>
+                <summary>Ragnarök trick</summary>
+                <div class="tip-content">
+                    Attack epics before research, then upgrade guard, then open shop for better rewards.
+                </div>
+            </details>
+
+            <details>
+                <summary>Dragon Mounds / Well Springs</summary>
+                <div class="tip-content">
+                    Claim only one per reset, register in chat, arrive within 10 minutes, and do not steal claimed mounds.
+                </div>
+            </details>
+        </section>
 
         <div class="selectors">
             <label for="targetSelect">Select Target:</label>
@@ -29,6 +92,20 @@
             <p><strong>Best Composition:</strong> <span id="composition">-</span></p>
             <p id="extraNote"></p>
         </div>
+
+        <!-- Resources section with links -->
+        <section class="resources" aria-label="Resources">
+            <h3>Resources</h3>
+            <ul>
+                <li><a href="https://github.com/theblackpearl-totalbattle/guide" target="_blank" rel="noopener">Project repository on GitHub</a></li>
+                <li><a href="https://theblackpearl-totalbattle.github.io/guide/" target="_blank" rel="noopener">View on GitHub Pages (if enabled)</a></li>
+                <li><a href="https://totalbattle.fandom.com/" target="_blank" rel="noopener">Total Battle Wiki</a></li>
+            </ul>
+        </section>
+
+        <footer class="site-footer">
+            <p>Made by theblackpearl-totalbattle · <a href="mailto:you@example.com">Contact</a></p>
+        </footer>
     </div>
 
     <script src="script.js"></script>
