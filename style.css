@@ -1,41 +1,41 @@
-/* Updated theme: blue sides with a light yellow inner panel and darker text
-   - Keeps the Total Battle inspired palette, but swaps the container to a light yellow
-   - Darker readable text inside
-   - Menu stacks vertically on small screens (mobile)
-   - Removed the gold accent line from the Strategy Details/result box
+/* style.css — grouped look with stronger group background tints and bolder group borders
+   Replace your existing style.css with this file.
 */
 
 * { box-sizing: border-box; }
 
 :root{
-  /* Page / panel palette */
-  --page-bg: #081226;               /* deep night blue for the page sides */
-  --inner-bg-start: #fffbe6;        /* light yellow (top) */
-  --inner-bg-end:   #fff6c8;        /* light yellow (bottom) */
+  --page-bg: #081226;
+  --inner-bg-start: #fffbe6;
+  --inner-bg-end:   #fff6c8;
   --panel-bg: linear-gradient(180deg,var(--inner-bg-start) 0%, var(--inner-bg-end) 100%);
-  --accent: #ffb400;                /* gold accent */
-  --accent-2: #e85b2f;              /* secondary orange/red accent */
-  --muted: #6d6a58;                 /* muted dark for labels on light background */
-  --text-dark: #2a2a23;             /* darker readable text for light background */
+  --accent: #ffb400;
+  --accent-2: #e85b2f;
+  --muted: #6d6a58;
+  --text-dark: #2a2a23;
   --panel-border: rgba(42,34,20,0.06);
   --shadow: 0 12px 30px rgba(2,8,20,0.12);
-  --glass: rgba(255,255,255,0.35);
-  --menu-highlight: rgba(255,180,0,0.12);
+
+  --table-border: rgba(42,34,20,0.10);
+  --table-border-strong: rgba(42,34,20,0.30); /* stronger group border */
+  --table-header-bg: rgba(0,0,0,0.03);
+
+  /* Stronger group background shades for improved readability */
+  --group-bg-odd: rgba(255,200,40,0.10);   /* warm yellow tint - stronger */
+  --group-bg-even: rgba(255,200,40,0.07);  /* slightly lighter warm tint */
 }
 
-/* Page base */
 html,body {
   height: 100%;
   margin: 0;
   background: var(--page-bg);
-  color: var(--text-dark); /* use darker text by default */
+  color: var(--text-dark);
   font-family: "Montserrat", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.45;
 }
 
-/* Outer container: light yellow interior */
 .container {
   max-width: 980px;
   margin: 48px auto;
@@ -48,25 +48,13 @@ html,body {
   overflow: visible;
 }
 
-/* subtle decorative vignette that blends with the yellow panel */
-.container::before{
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(600px 240px at 10% 10%, rgba(0,0,0,0.02), transparent 6%),
-    radial-gradient(300px 120px at 90% 80%, rgba(232,91,47,0.01), transparent 8%);
-  pointer-events: none;
-}
-
-/* Headings: darker color for contrast on the light background */
+/* Headings */
 h1 {
   font-family: "Cinzel", Georgia, serif;
   font-size: 2rem;
   margin: 0 0 10px 0;
   color: var(--text-dark);
   letter-spacing: 0.6px;
-  text-shadow: none;
 }
 
 .intro {
@@ -75,35 +63,31 @@ h1 {
   font-size: 1rem;
 }
 
-/* Top horizontal menu - emphasis box and right alignment on desktop */
+/* Top menu */
 .top-menu {
   display: flex;
   gap: 16px;
-  justify-content: flex-end;           /* push to the right on larger screens */
+  justify-content: flex-end;
   align-items: center;
   margin: 12px 0 20px 0;
   position: relative;
   padding: 10px 14px;
   border-radius: 14px;
 }
-
-/* pale yellow rectangle behind the menu for emphasis (subtle) */
 .top-menu::before {
   content: "";
   position: absolute;
   inset: -8px -18px -8px -8px;
-  background: var(--menu-highlight);
+  background: rgba(255,180,0,0.12);
   border-radius: 16px;
   z-index: -1;
   box-shadow: 0 10px 30px rgba(0,0,0,0.06);
 }
-
-/* Menu buttons: larger, uppercase, bold, more spaced */
 .menu-btn {
   display: inline-block;
   padding: 10px 18px;
   border-radius: 999px;
-  background: rgba(11,17,28,0.06); /* slightly dark translucent to stand out on yellow */
+  background: rgba(11,17,28,0.06);
   border: 1px solid rgba(11,17,28,0.06);
   color: var(--text-dark);
   text-decoration: none;
@@ -112,9 +96,7 @@ h1 {
   text-transform: uppercase;
   letter-spacing: 1px;
   transition: transform 120ms ease, box-shadow 120ms ease, color 120ms ease;
-  box-shadow: 0 6px 14px rgba(0,0,0,0.06);
 }
-
 .menu-btn:hover,
 .menu-btn:focus {
   transform: translateY(-3px);
@@ -122,138 +104,114 @@ h1 {
   box-shadow: 0 12px 30px rgba(0,0,0,0.10);
 }
 
-.menu-btn:focus-visible {
-  outline: 3px solid rgba(255,180,0,0.18);
-  outline-offset: 4px;
-}
-
-/* General Tips header uses Cinzel too */
+/* General tips header */
 .general-tips h2 {
   font-family: "Cinzel", serif;
   color: var(--text-dark);
   margin: 8px 0 10px 0;
   font-size: 1.1rem;
-  letter-spacing: 0.4px;
 }
 
-/* Details/summary styling adapted for light panel (unused if tips are plain) */
-.general-tips details {
-  background: linear-gradient(180deg, rgba(10,12,14,0.02), rgba(10,12,14,0.00));
-  border: 1px solid rgba(0,0,0,0.04);
-  border-radius: 8px;
-  margin: 8px 0;
-  overflow: hidden;
-}
-
-.general-tips summary {
-  list-style: none;
-  cursor: pointer;
-  padding: 12px 14px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  color: var(--text-dark);
-  font-weight: 600;
-  font-size: 0.98rem;
-}
-
-/* marker chevron */
-.general-tips summary::after{
-  content: "▾";
-  color: var(--muted);
-  transition: transform 0.18s ease;
-}
-.general-tips details[open] > summary::after{
-  transform: rotate(180deg);
-}
-
-.general-tips .tip-content{
-  padding: 12px 14px 16px 14px;
-  color: var(--text-dark);
-  font-size: 0.98rem;
-  border-top: 1px solid rgba(0,0,0,0.03);
-}
-
-/* Selectors layout */
-.selectors {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px 18px;
-  justify-content: flex-start;
-  align-items: center;
-  margin: 12px 0 8px 0;
-}
-
-.selectors label {
-  color: var(--muted);
-  margin-right: 8px;
-  font-weight: 600;
-  font-size: 0.95rem;
-}
-
-/* select: keep black / dark text for readability */
-.selectors select {
-  padding: 10px 14px;
-  font-size: 0.98rem;
-  border-radius: 999px;
-  min-width: 180px;
-  background: #ffffff;
-  border: 1px solid rgba(0,0,0,0.08);
-  color: #000;
-  cursor: pointer;
-  transition: transform 140ms ease, box-shadow 160ms ease;
-  -webkit-appearance: none;
-  appearance: none;
-}
-
-.selectors option {
-  color: #000;
-}
-
-.selectors select:hover {
-  box-shadow: 0 8px 18px rgba(0,0,0,0.06);
-  transform: translateY(-2px);
-}
-.selectors select:focus,
-.selectors select:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 6px rgba(255,180,0,0.08);
-  border-color: var(--accent);
-}
-
-/* result box: removed the gold accent border */
+/* Result box */
 .result-box {
   background: transparent;
   padding: 16px;
   border-radius: 8px;
-  border-left: none;           /* removed the golden line */
   color: var(--text-dark);
   margin-top: 8px;
 }
 
-/* Stacking section */
-.stacking h2 {
-  font-family: "Cinzel", serif;
-  color: var(--text-dark);
-  margin-top: 18px;
+/* Table styles */
+.table-wrap { overflow-x: auto; margin-top: 8px; }
+
+#strategyTable {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 640px;
+  margin: 6px 0;
+  background: transparent;
+  border: 1px solid var(--table-border);
+  border-radius: 6px;
+  overflow: hidden;
 }
 
-/* back link (use dark accent) */
-.back-link {
-  margin-top: 10px;
-}
-.back-link a {
-  color: var(--accent);
-  text-decoration: none;
+#strategyTable thead th {
+  text-align: left;
+  padding: 10px 12px;
   font-weight: 700;
-}
-.back-link a:hover,
-.back-link a:focus {
-  color: var(--accent-2);
-  text-decoration: underline;
+  background: var(--table-header-bg);
+  color: var(--text-dark);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
 }
 
-/* Resources & footer on light panel */
+#strategyTable th,
+#strategyTable td {
+  padding: 10px 12px;
+  vertical-align: top;
+  border-right: 1px solid var(--table-border);
+  border-bottom: 1px solid var(--table-border);
+  font-size: 0.96rem;
+}
+
+#strategyTable tr > *:last-child { border-right: none; }
+
+/* Grouped target cell styling: put name at the top of the cell */
+#strategyTable td.target-cell {
+  font-weight: 700;
+  vertical-align: top;         /* target name at top */
+  padding-top: 10px;          /* breathing room at top */
+  background: rgba(255,255,255,0.01);
+  color: var(--text-dark);
+  width: 220px;
+  white-space: normal;
+}
+
+/* --- Thicker group borders --- */
+/* Thicker top border for the first row of the group */
+tr.group-start td {
+  border-top: 2px solid var(--table-border-strong);
+}
+
+/* Thicker bottom border for the last row of the group */
+tr.group-end td {
+  border-bottom: 2px solid var(--table-border-strong);
+}
+
+/* Emphasize group edges */
+tr.group-start td:first-child,
+tr.group-end td:first-child {
+  border-left: 2px solid var(--table-border-strong);
+}
+tr.group-start td:last-child,
+tr.group-end td:last-child {
+  border-right: 2px solid var(--table-border-strong);
+}
+
+/* Stronger background per group for easier scanning */
+tr.group-odd td.group-row,
+tr.group-odd td {
+  background: var(--group-bg-odd);
+}
+tr.group-even td.group-row,
+tr.group-even td {
+  background: var(--group-bg-even);
+}
+
+/* Ensure grouped target cell background blends well and is slightly stronger */
+tr.group-odd td.target-cell { background: rgba(255,200,40,0.115); }
+tr.group-even td.target-cell { background: rgba(255,200,40,0.09); }
+
+/* Small-screen adjustments */
+@media (max-width:700px) {
+  #strategyTable { min-width: 100%; font-size: 0.95rem; }
+  #strategyTable td.target-cell { width: auto; white-space: normal; padding-top: 8px; }
+}
+
+/* Back links, resources, footer */
+.back-link { margin-top: 10px; }
+.back-link a { color: var(--accent); text-decoration: none; font-weight: 700; }
+.back-link a:hover, .back-link a:focus { color: var(--accent-2); text-decoration: underline; }
+
 .resources ul { padding-left: 1.1rem; color: var(--text-dark); }
 .resources a { color: var(--accent); text-decoration: none; }
 .resources a:hover { color: var(--accent-2); text-decoration: underline; }
@@ -266,38 +224,5 @@ h1 {
   font-size: 0.92rem;
 }
 
-/* smaller screens: stack menu vertically and stretch buttons full width */
-@media (max-width: 700px) {
-  .container { margin: 18px 12px; padding: 16px; border-radius: 8px; }
-  h1 { font-size: 1.4rem; }
-
-  /* Make menu vertical and full-width on mobile */
-  .top-menu {
-    flex-direction: column;       /* stack vertically */
-    justify-content: center;
-    align-items: stretch;         /* stretch children to full width */
-    padding: 8px 10px;
-    gap: 10px;
-  }
-  .top-menu::before {
-    inset: -6px -8px -6px -8px;
-  }
-
-  /* Make each button full width and centered text */
-  .menu-btn {
-    width: 100%;
-    box-sizing: border-box;
-    text-align: center;
-    padding: 10px 12px;
-    font-size: 1rem;
-  }
-
-  .selectors { flex-direction: column; align-items: stretch; gap: 10px; }
-  .selectors select { width: 100%; min-width: 0; padding: 12px; }
-  .general-tips summary { padding: 12px; font-size: 1rem; }
-  .general-tips .tip-content { font-size: 0.98rem; }
-  .result-box { padding: 12px; }
-}
-
-/* accessible focus-visible for keyboard users */
+/* accessible focus-visible */
 :focus-visible { outline: 3px solid rgba(255,180,0,0.10); outline-offset: 2px; }
