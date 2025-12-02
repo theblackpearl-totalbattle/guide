@@ -1,7 +1,8 @@
 /* Updated theme: blue sides with a light yellow inner panel and darker text
    - Keeps the Total Battle inspired palette, but swaps the container to a light yellow
    - Darker readable text inside
-   - Preserves menu emphasis, select styling and accessibility
+   - Menu stacks vertically on small screens (mobile)
+   - Removed the gold accent line from the Strategy Details/result box
 */
 
 * { box-sizing: border-box; }
@@ -135,7 +136,7 @@ h1 {
   letter-spacing: 0.4px;
 }
 
-/* Details/summary styling (accordion) — adapt colors for light panel */
+/* Details/summary styling adapted for light panel (unused if tips are plain) */
 .general-tips details {
   background: linear-gradient(180deg, rgba(10,12,14,0.02), rgba(10,12,14,0.00));
   border: 1px solid rgba(0,0,0,0.04);
@@ -220,12 +221,12 @@ h1 {
   border-color: var(--accent);
 }
 
-/* result box with darker text on light panel */
+/* result box: removed the gold accent border */
 .result-box {
   background: transparent;
   padding: 16px;
   border-radius: 8px;
-  border-left: 4px solid var(--accent);
+  border-left: none;           /* removed the golden line */
   color: var(--text-dark);
   margin-top: 8px;
 }
@@ -265,21 +266,32 @@ h1 {
   font-size: 0.92rem;
 }
 
-/* smaller screens: center menu and adjust spacing */
+/* smaller screens: stack menu vertically and stretch buttons full width */
 @media (max-width: 700px) {
   .container { margin: 18px 12px; padding: 16px; border-radius: 8px; }
   h1 { font-size: 1.4rem; }
+
+  /* Make menu vertical and full-width on mobile */
   .top-menu {
+    flex-direction: column;       /* stack vertically */
     justify-content: center;
+    align-items: stretch;         /* stretch children to full width */
     padding: 8px 10px;
+    gap: 10px;
   }
   .top-menu::before {
     inset: -6px -8px -6px -8px;
   }
+
+  /* Make each button full width and centered text */
   .menu-btn {
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    padding: 10px 12px;
     font-size: 1rem;
-    padding: 8px 12px;
   }
+
   .selectors { flex-direction: column; align-items: stretch; gap: 10px; }
   .selectors select { width: 100%; min-width: 0; padding: 12px; }
   .general-tips summary { padding: 12px; font-size: 1rem; }
