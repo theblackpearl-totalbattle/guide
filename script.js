@@ -1,5 +1,6 @@
-// Data and select population logic (unchanged)
-// Accordion/Details logic removed per request.
+// Populate the Strategy table from the data object.
+// Dropdowns removed — table will show one row per target-level combination.
+
 const data = {
     "Elven Citadel": {
         note: "Include Griffins if available for all Citadel attacks.",
@@ -33,45 +34,49 @@ const data = {
     }
 };
 
-// Populate target dropdown
-const targetSelect = document.getElementById('targetSelect');
-const levelSelect = document.getElementById('levelSelect');
-const targetName = document.getElementById('targetName');
-const levelValue = document.getElementById('levelValue');
-const composition = document.getElementById('composition');
-const extraNote = document.getElementById('extraNote');
+function populateStrategyTable() {
+    const tbody = document.querySelector('#strategyTable tbody');
+    if (!tbody) return;
 
-Object.keys(data).forEach(target => {
-    const option = document.createElement('option');
-    option.value = target;
-    option.textContent = target;
-    targetSelect.appendChild(option);
-});
+    // Clear existing
+    tbody.innerHTML = '';
 
-targetSelect.addEventListener('change', () => {
-    levelSelect.innerHTML = '<option value="">--Choose Level--</option>';
-    const selectedTarget = targetSelect.value;
-    if (selectedTarget) {
-        Object.keys(data[selectedTarget].levels).forEach(level => {
-            const option = document.createElement('option');
-            option.value = level;
-            option.textContent = level;
-            levelSelect.appendChild(option);
+    // For consistent ordering, iterate targets alphabetically then levels ascending
+    const targets = Object.keys(data).sort((a,b) => a.localeCompare(b, undefined, {numeric:true}));
+    targets.forEach(target => {
+        const levelsObj = data[target].levels || {};
+        // Convert level keys to numbers for sorting
+        const levels = Object.keys(levelsObj).map(l => Number(l)).sort((a,b) => a - b);
+        levels.forEach((lvl, idx) => {
+            const tr = document.createElement('tr');
+
+            // Target cell only for first level row for this target to make readability (optional)
+            const tdTarget = document.createElement('td');
+            tdTarget.textContent = target;
+            // If you prefer to group target rows with rowspan, uncomment the block below and remove per-row target text.
+            // tdTarget.rowSpan = levels.length;
+            // if (idx !== 0) tdTarget.style.display = 'none';
+
+            const tdLevel = document.createElement('td');
+            tdLevel.textContent = lvl;
+
+            const tdComposition = document.createElement('td');
+            tdComposition.textContent = levelsObj[lvl];
+
+            const tdNote = document.createElement('td');
+            tdNote.textContent = data[target].note || '';
+
+            tr.appendChild(tdTarget);
+            tr.appendChild(tdLevel);
+            tr.appendChild(tdComposition);
+            tr.appendChild(tdNote);
+
+            tbody.appendChild(tr);
         });
-    }
-    targetName.textContent = '-';
-    levelValue.textContent = '-';
-    composition.textContent = '-';
-    extraNote.textContent = '';
-});
+    });
+}
 
-levelSelect.addEventListener('change', () => {
-    const selectedTarget = targetSelect.value;
-    const selectedLevel = levelSelect.value;
-    if (selectedTarget && selectedLevel) {
-        targetName.textContent = selectedTarget;
-        levelValue.textContent = selectedLevel;
-        composition.textContent = data[selectedTarget].levels[selectedLevel];
-        extraNote.textContent = data[selectedTarget].note;
-    }
+// Initialize on DOMContentLoaded
+document.addEventListener('DOMContentLoaded', () => {
+    populateStrategyTable();
 });
