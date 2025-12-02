@@ -1,5 +1,5 @@
-// Populate the Strategy table from the data object.
-// Dropdowns removed — table will show one row per target-level combination.
+// Populate the Strategy table with grouped rows (rowspan) and simple group markers.
+// Adds 'group-row' and alternating 'group-odd' / 'group-even' classes so each target group's rows can share a background.
 
 const data = {
     "Elven Citadel": {
@@ -34,34 +34,46 @@ const data = {
     }
 };
 
+// Helper to create safe group ids (if needed)
+function slugify(text) {
+    return text.toString().toLowerCase()
+        .replace(/\s+/g, '-')           // spaces -> dashes
+        .replace(/[^\w\-]+/g, '')       // remove non-word chars
+        .replace(/\-\-+/g, '-')         // collapse multiple dashes
+        .replace(/^-+/, '')             // trim start
+        .replace(/-+$/, '');            // trim end
+}
+
 function populateStrategyTable() {
     const tbody = document.querySelector('#strategyTable tbody');
     if (!tbody) return;
 
-    // Clear existing
     tbody.innerHTML = '';
 
-    // For consistent ordering, iterate targets alphabetically then levels ascending
     const targets = Object.keys(data).sort((a,b) => a.localeCompare(b, undefined, {numeric:true}));
-    targets.forEach(target => {
+    targets.forEach((target, targetIndex) => {
         const levelsObj = data[target].levels || {};
-        // Convert level keys to numbers for sorting
         const levels = Object.keys(levelsObj).map(l => Number(l)).sort((a,b) => a - b);
-        levels.forEach((lvl, idx) => {
-            const tr = document.createElement('tr');
+        const groupId = slugify(target);
 
-            // Target cell only for first level row for this target to make readability (optional)
+        // Determine group parity for alternating group backgrounds
+        const groupClass = (targetIndex % 2 === 0) ? 'group-even' : 'group-odd';
+
+        // If no levels, create a single row and mark start/end
+        if (levels.length === 0) {
+            const tr = document.createElement('tr');
+            tr.dataset.group = groupId;
+            tr.classList.add('group-start', 'group-end', 'group-row', groupClass);
+
             const tdTarget = document.createElement('td');
+            tdTarget.classList.add('target-cell');
             tdTarget.textContent = target;
-            // If you prefer to group target rows with rowspan, uncomment the block below and remove per-row target text.
-            // tdTarget.rowSpan = levels.length;
-            // if (idx !== 0) tdTarget.style.display = 'none';
 
             const tdLevel = document.createElement('td');
-            tdLevel.textContent = lvl;
+            tdLevel.textContent = '-';
 
             const tdComposition = document.createElement('td');
-            tdComposition.textContent = levelsObj[lvl];
+            tdComposition.textContent = '-';
 
             const tdNote = document.createElement('td');
             tdNote.textContent = data[target].note || '';
@@ -72,11 +84,47 @@ function populateStrategyTable() {
             tr.appendChild(tdNote);
 
             tbody.appendChild(tr);
+            return;
+        }
+
+        // Render grouped rows with rowspan and mark group start/end for styling
+        levels.forEach((lvl, idx) => {
+            const tr = document.createElement('tr');
+            tr.dataset.group = groupId;
+            tr.classList.add('group-row', groupClass);
+
+            if (idx === 0) {
+                tr.classList.add('group-start');
+                const tdTarget = document.createElement('td');
+                tdTarget.classList.add('target-cell');
+                tdTarget.rowSpan = levels.length;
+                tdTarget.textContent = target;
+                tr.appendChild(tdTarget);
+            }
+
+            // If last level, mark the row as group-end (so we can render a thicker bottom border)
+            if (idx === levels.length - 1) {
+                tr.classList.add('group-end');
+            }
+
+            const tdLevel = document.createElement('td');
+            tdLevel.textContent = lvl;
+
+            const tdComposition = document.createElement('td');
+            tdComposition.textContent = levelsObj[lvl];
+
+            const tdNote = document.createElement('td');
+            tdNote.textContent = data[target].note || '';
+
+            tr.appendChild(tdLevel);
+            tr.appendChild(tdComposition);
+            tr.appendChild(tdNote);
+
+            tbody.appendChild(tr);
         });
     });
 }
 
-// Initialize on DOMContentLoaded
 document.addEventListener('DOMContentLoaded', () => {
     populateStrategyTable();
 });
