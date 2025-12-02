@@ -6,6 +6,41 @@
     <title>Total Battle Guide</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css" />
+    <style>
+      /* Small table styles so the strategy table looks good without changing style.css */
+      .table-wrap {
+        overflow-x: auto;
+        margin-top: 8px;
+      }
+      #strategyTable {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 640px;
+        margin: 6px 0;
+        background: rgba(255,255,255,0.02);
+      }
+      #strategyTable thead th {
+        text-align: left;
+        padding: 10px 12px;
+        font-weight: 700;
+        background: rgba(0,0,0,0.03);
+        color: var(--text-dark, #2a2a23);
+        border-bottom: 2px solid rgba(0,0,0,0.06);
+      }
+      #strategyTable tbody td {
+        padding: 10px 12px;
+        vertical-align: top;
+        color: var(--text-dark, #2a2a23);
+        border-bottom: 1px solid rgba(0,0,0,0.04);
+        font-size: 0.96rem;
+      }
+      #strategyTable tbody tr:nth-child(odd) td {
+        background: rgba(0,0,0,0.008);
+      }
+      @media (max-width:700px) {
+        #strategyTable { min-width: 100%; font-size: 0.95rem; }
+      }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -23,7 +58,7 @@
             <a class="menu-btn" href="#stacking-calculator">Stacking Calculator</a>
         </nav>
 
-        <!-- General Tips (now plain titles + text, no dropdowns) -->
+        <!-- General Tips (plain titles + text) -->
         <section id="general-tips" class="general-tips" aria-labelledby="general-tips-heading">
             <h2 id="general-tips-heading">General Tips</h2>
 
@@ -77,22 +112,23 @@
         <div class="result-box">
             <h2 id="strategy-monsters">Strategy Details for Monsters</h2>
 
-            <div class="selectors">
-                <label for="targetSelect">Select Target:</label>
-                <select id="targetSelect">
-                    <option value="">--Choose Target--</option>
-                </select>
-
-                <label for="levelSelect">Select Level:</label>
-                <select id="levelSelect">
-                    <option value="">--Choose Level--</option>
-                </select>
+            <!-- Replaced dropdown selectors with a table showing all targets / levels -->
+            <div class="table-wrap" aria-live="polite">
+              <table id="strategyTable" aria-describedby="strategy-description">
+                <caption id="strategy-description" style="display:none">List of targets, levels, recommended compositions and notes.</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Target</th>
+                    <th scope="col">Level</th>
+                    <th scope="col">Best Composition</th>
+                    <th scope="col">Note</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Populated by script.js -->
+                </tbody>
+              </table>
             </div>
-
-            <p><strong>Target:</strong> <span id="targetName">-</span></p>
-            <p><strong>Level:</strong> <span id="levelValue">-</span></p>
-            <p><strong>Best Composition:</strong> <span id="composition">-</span></p>
-            <p id="extraNote"></p>
 
             <p class="back-link"><a href="index.html">Back to top</a></p>
         </div>
@@ -105,7 +141,7 @@
             <p class="back-link"><a href="index.html">Back to top</a></p>
         </section>
 
-        <!-- Resources section with links (repository & Pages links removed) -->
+        <!-- Resources section with links -->
         <section class="resources" aria-label="Resources">
             <h3>Resources</h3>
             <ul>
